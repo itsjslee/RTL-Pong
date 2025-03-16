@@ -1,5 +1,5 @@
 # RTL-Pong
-
+by Amaan Choudhury, Ayan Nair, Dhruv Dighrasker, and Joshua Lee
 ## Kappa Theta Pi Push to Prod Project
 A Field-Programmable Gate Array (FPGA) is a type of computer chip that can be reprogrammed to perform different tasks after it’s been manufactured. Unlike a regular processor that runs software, an FPGA allows you to create custom digital circuits, making it super flexible for applications like signal processing, AI, and hardware acceleration.
 
