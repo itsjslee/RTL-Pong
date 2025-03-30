@@ -10,9 +10,9 @@
  * - Reset functionality
  */
 
-module ball(
+module ball
     input wire clk,
     output reg ball_direction
-);
+ 
 
 endmodule
