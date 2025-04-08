@@ -12,6 +12,7 @@
 
 module ball
     input wire clk,
+    input wire reset,
     output reg ball_direction
  
 
