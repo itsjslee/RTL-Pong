@@ -1,39 +1,49 @@
-/*
- * Test Bench Implementation for the Pong Game
- * ---------------------------------------------------
- * Connects control buttons, clock, and display signals to game modules.
- * 
- *  input wire clk,
- *  input wire reset,
-    input wire p1_up,
-    input wire p1_down,
-    input wire p2_up,
-    input wire p2_down,
-    input wire [9:0] x_pos,     // Current VGA pixel X
-    input wire [9:0] y_pos,     // Current VGA pixel Y
+`timescale 1ns / 1ps
 
-    output wire [9:0] paddle1_y,
-    output wire [9:0] paddle2_y,
-    output wire [9:0] ball_x,
-    output wire [9:0] ball_y,
-    output wire [1:0] ball_direction,
-    output wire [3:0] p1_score,
-    output wire [3:0] p2_score,
-    output wire ball_pixel
- */
+module score_tb();
 
- /*
-  * Expected output:
-  * 
-  * Ball moves in a stright line towards the left (player 1)
-  * Ball collides with left paddle (player 1) and bounces back in a stright line
-  * Ball collides with right paddle (player 2) and bounces back in a stright line
-  * Left paddle moves up
-  * Ball collides with the left wall and resets to the center
-  * 
-  */
+    reg clk;
+    reg reset;
+    reg [9:0] ball_x;
+    reg [1:0] ball_direction; // not used by score module, but needs to be assigned
+    wire [3:0] p1_score;
+    wire [3:0] p2_score;
 
- 
- `timescale 1ns/100ps
- module testBench();
-    parameter  = ;
+    // Instantiate the module
+    score uut (
+        .clk(clk),
+        .reset(reset),
+        .ball_x(ball_x),
+        .ball_direction(ball_direction),
+        .p1_score(p1_score),
+        .p2_score(p2_score)
+    );
+
+    // Clock generation: 10ns period
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    initial begin
+        // Initialize
+        reset = 1;
+        ball_x = 320; // Start from middle
+        ball_direction = 2'b10; // Moving right (x_dir=1)
+
+        #10;
+        reset = 0;
+
+        // Move the ball towards the right edge
+        repeat (65) begin
+            #10;
+            ball_x = ball_x + 5; // Move ball to the right every clock cycle
+        end
+
+        // Hold after crossing boundary
+        #100;
+
+        $finish;
+    end
+
+endmodule
